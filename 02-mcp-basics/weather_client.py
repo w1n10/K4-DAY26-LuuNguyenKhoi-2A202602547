@@ -40,6 +40,11 @@ async def main() -> None:
                 print(f"\ncall_tool get_weather(city={city!r}):")
                 print("  ->", result.content[0].text)
 
+            # 3. Gọi tool dự báo — thêm tool ở server, client không cần sửa schema
+            result = await session.call_tool("get_forecast", {"city": "Hanoi", "days": 3})
+            print("\ncall_tool get_forecast(city='Hanoi', days=3):")
+            print("  ->", result.content[0].text)
+
 
 if __name__ == "__main__":
     asyncio.run(main())

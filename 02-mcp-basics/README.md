@@ -1,6 +1,6 @@
 # 02 — MCP Basics (Server + Client)
 
-Cùng tool `get_weather`, nhưng giờ tách ra **MCP server độc lập**. Server tự công bố
+Cùng tool `get_weather` (thêm `get_forecast`), nhưng giờ tách ra **MCP server độc lập**. Server tự công bố
 tool qua giao thức MCP; bất kỳ client nào (Claude Code, Cursor, hoặc `weather_client.py`)
 cũng cắm vào dùng được — không cần biết code bên trong.
 
@@ -9,8 +9,16 @@ weather_client.py                       weather_server.py
 ┌─────────────┐    giao thức MCP    ┌─────────────────┐
 │  list_tools │ ──────────────────▶ │ @mcp.tool()     │
 │  call_tool  │ ◀────────────────── │ get_weather()   │
-└─────────────┘     stdio           └─────────────────┘
+└─────────────┘     stdio           │ get_forecast()  │
+                                    └─────────────────┘
 ```
+
+## Tools
+
+| Tool | Mô tả |
+|---|---|
+| `get_weather(city)` | Thời tiết hiện tại (mock) |
+| `get_forecast(city, days=3)` | Dự báo 1–3 ngày tới (mock) |
 
 ## Cách chạy (không cần API key)
 
@@ -24,6 +32,8 @@ Kết quả mong đợi:
 ```
 Tools server cung cấp:
   - get_weather: Lấy thời tiết hiện tại của một thành phố.
+  - get_forecast: Lấy dự báo thời tiết của một thành phố cho 1–3 ngày tới.
+  ...
 
 call_tool get_weather(city='Hanoi'):
   -> Hanoi: 29°C, trời mưa
@@ -33,6 +43,12 @@ call_tool get_weather(city='Danang'):
 
 call_tool get_weather(city='Haiphong'):
   -> Haiphong: 33°C, mưa rào
+
+call_tool get_forecast(city='Hanoi', days=3):
+  -> Dự báo 3 ngày cho Hanoi:
+  Ngày 1: 27°C, mưa nhẹ
+  Ngày 2: 31°C, nắng
+  Ngày 3: 30°C, nhiều mây
 ```
 
 ## Files
