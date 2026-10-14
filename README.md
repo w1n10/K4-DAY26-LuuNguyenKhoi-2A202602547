@@ -58,6 +58,23 @@ python auth_client.py              # terminal 2
 cd 03-production && python registry_client.py
 ```
 
+### Windows (PowerShell)
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1          # CMD: .venv\Scripts\activate.bat | Git Bash: source .venv/Scripts/activate
+pip install -r requirements.txt
+
+# Nếu PowerShell báo "running scripts is disabled":
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+
+# Function Calling (cần Gemini API key)
+$env:GEMINI_API_KEY = "..."
+cd 01-function-calling; python weather_function_calling.py
+```
+
+> Nếu console in tiếng Việt bị lỗi `UnicodeEncodeError`, đặt `$env:PYTHONIOENCODING = "utf-8"` trước khi chạy.
+
 ---
 
 ## Định nghĩa ngắn gọn
@@ -176,7 +193,7 @@ MCP server phục vụ qua **HTTP** cho nhiều client → cần xác thực. MC
 
 - Server: cấu hình `AuthSettings` + implement `TokenVerifier` protocol
 - Client: gửi header `Authorization: Bearer <token>` qua `create_mcp_http_client(headers=...)` của MCP SDK
-- Không có token → 401, token sai → 403, logic tool không biết gì về auth
+- Không có token hoặc token sai → 401 (`invalid_token`), token thiếu scope → 403, logic tool không biết gì về auth
 
 | Tầng | Demo (stdio) | Production (HTTP) |
 |---|---|---|

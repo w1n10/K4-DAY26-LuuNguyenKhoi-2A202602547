@@ -7,7 +7,7 @@ Luồng hoạt động:
   Client gửi request HTTP kèm header "Authorization: Bearer <token>"
     → MCP SDK tự chạy BearerAuthBackend để xác minh token
     → Token hợp lệ → cho phép truy cập tool
-    → Token sai / thiếu → trả về 401/403
+    → Token sai / thiếu → trả về 401 (thiếu scope → 403)
 
 Cách chạy:
     pip install -r ../requirements.txt     # từ thư mục gốc repo
